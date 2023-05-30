@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,windows,macos,eclipse,maven
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,macos,eclipse,maven
 
+application.properties
+
 ### Eclipse ###
 .metadata
 bin/
@@ -100,7 +102,7 @@ replay_pid*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
 
 # Thumbnails
 ._*
