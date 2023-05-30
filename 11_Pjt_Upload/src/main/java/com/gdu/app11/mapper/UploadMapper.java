@@ -10,13 +10,10 @@ import com.gdu.app11.domain.UploadDTO;
 
 @Mapper
 public interface UploadMapper {
-
-	// getUploadList
-	public List<UploadDTO> getUploadList();
 	
-	// getUploadListUsingPagination
-	public List<UploadDTO> getUploadListUsingPagination(Map<String, Object> map);
+	// getUploadList
 	public int getUploadCount();
+	public List<UploadDTO> getUploadList(Map<String, Object> map);
 	
 	// addUpload
 	public int addUpload(UploadDTO uploadDTO);
@@ -33,7 +30,7 @@ public interface UploadMapper {
 	public int increaseDownloadCount(int attachNo);
 	
 	// downloadAll
-	// public int addAttach(AttachDTO attachDTO);
+	// public List<AttachDTO> getAttachList(int uploadNo);
 	
 	// removeUpload
 	public int removeUpload(int uploadNo);
@@ -46,4 +43,5 @@ public interface UploadMapper {
 	
 	// RemoveWrongfileScheduler
 	public List<AttachDTO> getAttachListInYesterday();
+	
 }

@@ -48,7 +48,7 @@ public class BbsServiceImpl implements BbsService {
 
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional
 	@Override
 	public int addBbs(HttpServletRequest request) {
 		
@@ -83,8 +83,8 @@ public class BbsServiceImpl implements BbsService {
 		return bbsMapper.removeBbs(bbsNo);
 	}
 	
-	@Transactional(readOnly=true)	// INSERT, UPDATE, DELETE 중 2개 이상의 쿼리를 실행하는 경우 반드시 추가한다!
-									// readOnly=true : 성능향상을 위한 도구, 항상 붙이기
+	@Transactional	// INSERT, UPDATE, DELETE 중 2개 이상의 쿼리를 실행하는 경우 반드시 추가한다!
+					// readOnly=true : 성능향상을 위한 도구, 항상 붙이기
 	@Override
 	public int addReply(HttpServletRequest request) {
 		

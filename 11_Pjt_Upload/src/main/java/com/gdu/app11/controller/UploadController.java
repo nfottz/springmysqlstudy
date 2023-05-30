@@ -1,9 +1,7 @@
 package com.gdu.app11.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,31 +16,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gdu.app11.service.UploadService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RequestMapping("/upload")
 @Controller
 public class UploadController {
 
-	@Autowired
-	private UploadService uploadService;
+	// field
+	private final UploadService uploadService;
 	
-//	@GetMapping("/list.do")
-//	public String list(Model model) {
-//		uploadService.getUploadList(model);
-//		return "upload/list";
-//	}
-
 	@GetMapping("/list.do")
 	public String list(HttpServletRequest request, Model model) {
-		uploadService.getUploadListUsingPagination(request, model);
+		uploadService.getUploadList(request, model);
 		return "upload/list";
-	}
-	
-	@GetMapping("/change/record.do")
-	public String changeRecord(HttpSession session
-			                 , HttpServletRequest request
-			                 , @RequestParam(value="recordPerPage", required=false, defaultValue="10") int recordPerPage) {
-		session.setAttribute("recordPerPage", recordPerPage);
-		return "redirect:" + request.getHeader("referer");	// 현재 주소(/employees/change/record.do)의 이전 주소(Referer)로 이동하시오.
 	}
 	
 	@GetMapping("/write.do")
@@ -58,25 +45,24 @@ public class UploadController {
 	}
 	
 	@GetMapping("/detail.do")
-	public String detail(@RequestParam(value="uploadNo", required=false, defaultValue="0") int uploadNo, Model model) {
+	public String detail(@RequestParam(value="uploadNo", required=false, defaultValue="0") int uploadNo
+			               , Model model) {
 		uploadService.getUploadByNo(uploadNo, model);
 		return "upload/detail";
 	}
 	
 	@GetMapping("/display.do")
-	public ResponseEntity<byte[]> display(@RequestParam("attachNo") int attachNo){
+	public ResponseEntity<byte[]> display(@RequestParam("attachNo") int attachNo) {
 		return uploadService.display(attachNo);
 	}
 	
 	@GetMapping("/download.do")
-	// method에서 args는 적을수록 좋다!
-	// args를 HttpServletRequest request로 받으면 서비스에서 하나로 받아서 .getParameter, .getHeader를 사용할 수도 있다!
-	public ResponseEntity<Resource> download(@RequestParam("attachNo") int attachNo, @RequestHeader("User-Agent") String userAgent){
+	public ResponseEntity<Resource> download(@RequestParam("attachNo") int attachNo, @RequestHeader("User-Agent") String userAgent) {
 		return uploadService.download(attachNo, userAgent);
 	}
 	
 	@GetMapping("/downloadAll.do")
-	public ResponseEntity<Resource> downloadAll(@RequestParam("uploadNo") int uploadNo){
+	public ResponseEntity<Resource> downloadAll(@RequestParam("uploadNo") int uploadNo) {
 		return uploadService.downloadAll(uploadNo);
 	}
 	
@@ -87,7 +73,7 @@ public class UploadController {
 	}
 	
 	@PostMapping("/editUpload.do")
-	public String edit(@RequestParam("uploadNo") int uploadNo, Model model) {
+	public String editUpload(@RequestParam("uploadNo") int uploadNo, Model model) {
 		uploadService.getUploadByNo(uploadNo, model);
 		return "upload/edit";
 	}
